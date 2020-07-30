@@ -1,0 +1,19 @@
+{
+  "name": "insomnia-plugin-fastcash-fcx",
+  "version": "1.0.0",
+  "private": true,
+  "insomnia": {
+    "name": "fastcash-fcx",
+    "description": ""
+  },
+  "main": "main.js",
+  "author": "Leonardo Sancho",
+  "license": "ISC",
+  "dependencies": {
+    "insomnia-url": "^2.2.10",
+    "jssha": "^3.1.1"
+  },
+  "devDependencies": {
+    "@types/jssha": "^2.0.0"
+  }
+}
