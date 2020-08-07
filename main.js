@@ -45,22 +45,22 @@ const getSignature = (apiSecret, digest) => {
 const getFCX = (apiKey, apiSecret, method, url, data) => {
     const timestamp = new Date().getTime().toString();
     const nonce = generateRandomString({ length: 16 });
-    const dataHash = getHash256(data);
+    const dataHash = getHash256(data.text);
     const digest = getDigest(apiKey, nonce, timestamp, method, url, dataHash);
     const signature = getSignature(apiSecret, digest);
     const fcx = (apiKey + ":" + nonce + ":" + timestamp + ":" + signature).toLowerCase();
 
-    // console.log('apiKey', apiKey);
-    // console.log('apiSecret', apiSecret);
-    // console.log('method', method);
-    // console.log('url', url);
-    // console.log('data', data);
+    console.log('apiKey', apiKey);
+    console.log('apiSecret', apiSecret);
+    console.log('method', method);
+    console.log('url', url);
+    console.log('data', data.text);
 
-    // console.log('dataHash', dataHash);
-    // console.log('digest', digest);
-    // console.log('signature', signature);
+    console.log('dataHash', dataHash);
+    console.log('digest', digest);
+    console.log('signature', signature);
 
-    // console.log('fcx', fcx);
+    console.log('fcx', fcx);
 
     return fcx;
 }
