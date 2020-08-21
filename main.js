@@ -50,28 +50,29 @@ const getFCX = (apiKey, apiSecret, method, url, data) => {
     const signature = getSignature(apiSecret, digest);
     const fcx = (apiKey + ":" + nonce + ":" + timestamp + ":" + signature).toLowerCase();
 
-    console.log('apiKey', apiKey);
-    console.log('apiSecret', apiSecret);
-    console.log('method', method);
-    console.log('url', url);
-    console.log('data', data.text);
+    // console.log('apiKey', apiKey);
+    // console.log('apiSecret', apiSecret);
+    // console.log('method', method);
+    // console.log('url', url);
+    // console.log('data', data.text);
 
-    console.log('dataHash', dataHash);
-    console.log('digest', digest);
-    console.log('signature', signature);
+    // console.log('dataHash', dataHash);
+    // console.log('digest', digest);
+    // console.log('signature', signature);
 
-    console.log('fcx', fcx);
+    // console.log('fcx', fcx);
 
     return fcx;
 }
 
 const getKnownUrlsFromEnvironment = env => {
     const urls = new Set();
-    const entries = Object.keys(env)
-        .filter(k => typeof env[k] === 'object' && env[k] !== null)
-        .map(k => env[k]);
+    const api = env.api;
+    const getEntries = root => Object.keys(root)
+        .filter(k => typeof root[k] === 'object' && root[k] !== null)
+        .map(k => root[k]);
 
-    for (entry of entries) {
+    for (entry of getEntries(api)) {
         const baseUrl = entry['baseUrl'];
         if (baseUrl) urls.add(baseUrl);
     }
