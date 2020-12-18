@@ -95,12 +95,13 @@ const canAddFcxAuthHeader = (request, currentUrl) => {
 
 const addFcxAuthHeader = async context => {
     const request = context.request;
-    const publisher = request.getEnvironmentVariable('publisher');
-    if (!publisher) throw new Error('Publisher data are required');
 
     const url = getUrl(request);
 
     if (canAddFcxAuthHeader(request, url)) {
+        const publisher = request.getEnvironmentVariable('publisher');
+        if (!publisher) throw new Error('Publisher data are required');
+
         const apiKey = publisher.credentials.apiKey;
         const apiSecret = publisher.credentials.apiSecret;
         const method = request.getMethod();
