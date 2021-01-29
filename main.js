@@ -1,5 +1,5 @@
 const jsSHA = require('jssha');
-const { buildQueryStringFromParams, joinUrlAndQueryString, smartEncodeUrl } = require('insomnia-url');
+const { buildQueryStringFromParams, joinUrlAndQueryString } = require('insomnia-url');
 
 const isEmpty = obj => Object.keys(obj).length === 0 && obj.constructor === Object
 
@@ -65,19 +65,26 @@ const getFCX = (apiKey, apiSecret, method, url, data) => {
     return fcx;
 }
 
-const getKnownUrlsFromEnvironment = env => {
-    const urls = new Set();
-    const api = env.api;
-    const getEntries = root => Object.keys(root)
-        .filter(k => typeof root[k] === 'object' && root[k] !== null)
-        .map(k => root[k]);
+const getKnownHostsFromEnvironment = env => {
+    const variable = 'use-fastcash-fcx-on';
+    const useFcxOn = env[variable];
+    if (!useFcxOn) return [];
 
-    for (entry of getEntries(api)) {
-        const baseUrl = entry['baseUrl'];
-        if (baseUrl) urls.add(baseUrl);
+    const root = env[useFcxOn];
+    const hosts = new Set();
+    const getEntries = r => Object.keys(r)
+        .filter(k => typeof r[k] === 'object' && r[k] !== null)
+        .map(k => r[k]);
+
+    for (entry of getEntries(root)) {
+        const host = entry['host'];
+        if (host) hosts.add(host);
     }
 
-    return Array.from(urls);
+    const host = root['host'];
+    if (host) hosts.add(host);
+
+    return Array.from(hosts);
 }
 
 const getUrl = request => {
@@ -88,28 +95,29 @@ const getUrl = request => {
 }
 
 const canAddFcxAuthHeader = (request, currentUrl) => {
-    const knownUrls = getKnownUrlsFromEnvironment(request.getEnvironment());
-    const canHandle = knownUrls.some(url => currentUrl.includes(url));
+    const knownHosts = getKnownHostsFromEnvironment(request.getEnvironment());
+    const canHandle = knownHosts.some(url => currentUrl.includes(url));
     return canHandle;
 }
 
 const addFcxAuthHeader = async context => {
     const request = context.request;
-
     const url = getUrl(request);
 
     if (canAddFcxAuthHeader(request, url)) {
-        const publisher = request.getEnvironmentVariable('publisher');
-        if (!publisher) throw new Error('Publisher data are required');
+        const variable = 'fastcash';
+        const user = request.getEnvironmentVariable(variable);
+        if (!user) throw new Error(`Variable '${variable}' with 'credentials' are required`);
 
-        const apiKey = publisher.credentials.apiKey;
-        const apiSecret = publisher.credentials.apiSecret;
+        const apiKey = user.credentials.apiKey;
+        const apiSecret = user.credentials.apiSecret;
         const method = request.getMethod();
         const data = request.getBody();
 
         const fcx = getFCX(apiKey, apiSecret, method, url, data);
 
         request.setHeader('Authorization', `FCX ${fcx}`);
+        console.log('FCX added to request', url);
     }
 }
 

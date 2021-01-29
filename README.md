@@ -1,14 +1,4 @@
 # Getting Started
-1.	Com Insomnia já instalado, no cmd:
-```cmd
-cd %appdata%\Insomnia\plugins
-```
-
-2.	Baixe o plugin pelo git:
- ```cmd
-git clone https://fastcashdev.visualstudio.com/Product%20Development/_git/insomnia-plugin-fastcash-fcx
-```
-
-3.	No Insomnia e aperte a hotkey **Ctrl** + **, 
-4.	Na aba **plugins** deverá aparecer o plugin de fcx
-5.  Pronto, todo request terá um FCX injetado no Header
+1.	Instale o plugin `insomnia-plugin-fastcash-fcx`
+2.  No `Base Environment` do Insomnia defina a variavel `use-fastcash-fcx-on` que é o nome do objeto que contém os hosts da api
+3.  Pronto, todo request com url que possui uma URL com um dos hosts do objeto terá um FCX injetado no Header
