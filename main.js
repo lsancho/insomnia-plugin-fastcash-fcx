@@ -96,11 +96,11 @@ const getUrl = request => {
 
 const canAddFcxAuthHeader = (request, currentUrl) => {
     const knownHosts = getKnownHostsFromEnvironment(request.getEnvironment());
-    let canHandle = knownHosts.some(url => currentUrl.includes(url));
+    let canHandle = knownHosts.some(host => currentUrl.includes(host));
 
     const auth = request.getAuthentication();
     // caso ja tenha apikey definida, usa. exemplo: endpoints de PCI
-    if (auth) {
+    if (auth && !isEmpty(auth)) {
         canHandle = /bearer/.test(auth.type) && /apikey/.test(auth.prefix)
     }
 
