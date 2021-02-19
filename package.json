@@ -1,19 +1,21 @@
 {
-  "name": "insomnia-plugin-fastcash-fcx",
-  "version": "1.0.0",
-  "private": true,
-  "insomnia": {
-    "name": "fastcash-fcx",
-    "description": ""
-  },
-  "main": "main.js",
-  "author": "Leonardo Sancho",
-  "license": "ISC",
-  "dependencies": {
-    "insomnia-url": "^2.2.10",
-    "jssha": "^3.1.1"
-  },
-  "devDependencies": {
-    "@types/jssha": "^2.0.0"
-  }
+    "name": "insomnia-plugin-fastcash-fcx",
+    "version": "1.0.1",
+    "main": "main.js",
+    "insomnia": {
+        "name": "fastcash-fcx",
+        "displayName": "Fastcash FCX Plugin",
+        "description": "add authorization header (fcx) used on Fastcash API",
+        "publisher": {
+            "name": "Fastcash",
+            "icon": "https://site.fastcash.com.br/wp-content/uploads/2020/12/LOGO-300x64.png"
+        }
+    },
+    "dependencies": {
+        "insomnia-url": "^2.2.24",
+        "jssha": "^3.2.0"
+    },
+    "devDependencies": {
+        "@types/jssha": "^2.0.0"
+    }
 }
