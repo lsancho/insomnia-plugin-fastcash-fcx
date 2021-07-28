@@ -43,6 +43,8 @@ const getSignature = (apiSecret, digest) => {
 }
 
 const getFCX = (apiKey, apiSecret, method, url, data) => {
+    url = url.replace(/(\/\/localhost):\d+(\/?)/, '$1$2')
+
     const timestamp = new Date().getTime().toString();
     const nonce = generateRandomString({ length: 16 });
     const dataHash = getHash256(data.text);
