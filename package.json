@@ -8,7 +8,7 @@
         "description": "add authorization header (fcx) used on Fastcash API",
         "publisher": {
             "name": "Fastcash",
-            "icon": "https://site.fastcash.com.br/wp-content/uploads/2020/12/LOGO-300x64.png"
+            "icon": "https://site.fastcash.com.br/wp-content/uploads/2020/12/LOGO.png"
         }
     },
     "dependencies": {
